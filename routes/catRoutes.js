@@ -6,3 +6,5 @@ router.get("/:id", ctrl.cats.show);
 router.post("/", ctrl.cats.create);
 router.put("/:id", ctrl.cats.update);
 router.delete("/:id", ctrl.cats.destroy);
+
+module.exports = router;

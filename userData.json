@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "username": "catgirl97",
+      "password": "1234",
+      "displayname": "Becky",
+      "apartment": 111
+    },
+    {
+      "username": "bonanza",
+      "password": "1234",
+      "displayname": "Nicholas",
+      "apartment": 232
+    },
+    {
+      "username": "speedracer",
+      "password": "1234",
+      "displayname": "Jimmy",
+      "apartment": 356
+    },
+    {
+      "username": "politicalanimal",
+      "password": "1234",
+      "displayname": "Elizabeth",
+      "apartment": 205
+    }
+  ]
+}

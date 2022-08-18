@@ -23,7 +23,12 @@ const show = (req, res) => {
 const create = (req, res) => {
   db.Cat.create(req.body, (err, savedCat) => {
     if (err) console.log("Error with Cat create", err)
-    res.status(201).json({cat: savedCat})
+    db.User.findById(req.body.user, (err, foundUser) => {
+      foundUser.cats.push(savedCat);
+      foundUser.save((err, savedCat) => {
+        res.status(201).json({cat: savedCat})
+      });
+    });
   });
 };
 
@@ -37,7 +42,12 @@ const update = (req, res) => {
 const destroy = (req, res) => {
   db.Cat.findByIdAndDelete(req.params.id, (err, deletedCat) => {
     if (err) console.log("Error with Cat delete", err)
-    res.status(200).json({cat: deletedCat})
+    db.User.findOne({"cats": req.params.id}, (err, foundUser) => {
+      foundUser.cats.remove(req.params.id);
+      foundUser.save((err, updatedUser) => {
+        res.status(200).json({cat: deletedCat})
+      });
+    });
   });
 };
 
