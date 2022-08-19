@@ -6,6 +6,7 @@ const CatSchema = new Schema({
   age: Number,
   breed: String,
   feeding: String,
+  user: { type: Schema.Types.ObjectId, ref: "User" },
   personality: [String],
   medication: [String],
   additionalnotes: [String],
