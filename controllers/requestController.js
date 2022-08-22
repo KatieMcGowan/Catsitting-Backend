@@ -23,7 +23,7 @@ const show = (req, res) => {
 const create = (req, res) => {
   db.Request.create(req.body, (err, savedRequest) => {
     if (err) console.log("Error with Request create", err)
-    db.User.findById(req.body.user, (err, foundUser) => {
+    db.User.findById(req.body.creator, (err, foundUser) => {
       foundUser.requested.push(savedRequest);
       foundUser.save((err, savedUser) => {
         res.status(201).json({request: savedRequest})
