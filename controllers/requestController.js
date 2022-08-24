@@ -27,15 +27,20 @@ const create = (req, res) => {
       foundUser.requested.push(savedRequest);
       foundUser.save((err, savedUser) => {
         res.status(201).json({request: savedRequest})
-      })
-    })
+      });
+    });
   });
 };
 
 const update = (req, res) => {
   db.Request.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedRequest) => {
     if (err) console.log("Error in Request update", err)
-    res.status(200).json({request: updatedRequest})
+    db.User.findById(req.body.catsitter, (err, foundUser) => {
+      foundUser.accepted.push(updatedRequest);
+      foundUser.save((err, savedUser) => {
+        res.status(200).json({request: updatedRequest})
+      });
+    });
   });
 };
 

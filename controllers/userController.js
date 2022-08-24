@@ -27,8 +27,16 @@ const create = (req, res) => {
   });
 };
 
+const update = (req, res) => {
+  db.User.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedUser) => {
+    if (err) console.log("Error in User update", err)
+    res.status(200).json({request: updatedUser})
+  });
+};
+
 module.exports = {
   index,
   show,
   create,
+  update,
 }
