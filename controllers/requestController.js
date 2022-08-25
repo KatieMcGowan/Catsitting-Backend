@@ -35,12 +35,7 @@ const create = (req, res) => {
 const update = (req, res) => {
   db.Request.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedRequest) => {
     if (err) console.log("Error in Request update", err)
-    db.User.findById(req.body.catsitter, (err, foundUser) => {
-      foundUser.accepted.push(updatedRequest);
-      foundUser.save((err, savedUser) => {
-        res.status(200).json({request: updatedRequest})
-      });
-    });
+    res.status(200).json({request: updatedRequest})
   });
 };
 
