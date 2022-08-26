@@ -33,10 +33,23 @@ const create = (req, res) => {
 };
 
 const update = (req, res) => {
-  db.Request.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedRequest) => {
-    if (err) console.log("Error in Request update", err)
-    res.status(200).json({request: updatedRequest})
+  db.Request.findById(req.params.id, (err, foundRequest) => {
+    let request = foundRequest
+    db.Request.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedRequest) => {
+    if(updatedRequest.accepted !== request.accepted) {
+      db.User.findById(updatedRequest.catsitter, (err, foundUser) => {
+        foundUser.accepted.push(updatedRequest);
+        foundUser.save((err, savedUser) => {
+          res.status(200).json({request: updatedRequest})
+      });
+    })
+    } else if (updatedRequest.accepted === false && !!updatedRequest.catsitter === false) {
+      res.status(200).json({request: updatedRequest})
+    } else if (updatedRequest.accepted === true && !!updatedRequest.catsitter === true) {
+      res.status(200).json({request: updatedRequest})
+    }
   });
+});
 };
 
 const destroy = (req, res) => {
