@@ -10,6 +10,12 @@ const RequestSchema = new Schema({
   messages: [ { type: Schema.Types.ObjectId, ref: "Message" } ],
 })
 
+// Request.pre('deleteMany', function(next) {
+//   let request = this;
+//   request.model('Message').deleteOne({ request: request._id }, next);
+// });
+
 const Request = mongoose.model("Request", RequestSchema);
+
 
 module.exports = Request;
