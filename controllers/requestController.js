@@ -52,23 +52,11 @@ const update = (req, res) => {
 });
 };
 
-// const destroy = (req, res) => {
-//   db.Request.findByIdAndDelete(req.params.id, (err, deletedRequest) => {
-//     if (err) console.log("Error with Request delete", err)
-//     db.Message.remove({
-//       _id: {
-//         $in: deletedRequest.messages
-//       }, 
-//     }, (err, data) => {
-//       res.status(200).json({request: deletedRequest})
-//     })
-//   });
-// };
-
-
+//Need to find out how to remove all messages
 const destroy = (req, res) => {
   db.Request.findByIdAndDelete(req.params.id, (err, deletedRequest) => {
     if (err) console.log("Error with Request delete", err)
+    console.log(deletedRequest)
     if (!!deletedRequest.catsitter === false && deletedRequest.messages.length === 0) {
       console.log("No catsitter no messages route hit")
       db.User.findByIdAndUpdate(deletedRequest.creator, { $pull: {"requested": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {
@@ -76,23 +64,16 @@ const destroy = (req, res) => {
       })
     } else if (!!deletedRequest.catsitter === true && deletedRequest.messages.length === 0) {
       console.log("Yes catsitter no messages route hit")
-      db.User.remove({
-        _id: {
-          $in: deletedRequest.creator
-        }
+      db.User.findByIdAndUpdate(deletedRequest.creator, { $pull: {"requested": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {
+        console.log(updatedUser)
+      });
+      db.User.findByIdAndUpdate(deletedRequest.catsitter, { $pull: {"accepted": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {
+        console.log(updatedUser)
+        res.status(200).json({request: deletedRequest})
       })
-      db.User.remove({
-        _id: {
-          $in: deletedRequest.catsitter
-        }
-      }), res.status(200).json({request: deletedRequest})
     } else if (!!deletedRequest.catsitter === false && deletedRequest.messages.length > 0) {
       console.log("No catsitter yes messages route hit")
-      db.User.remove({
-        _id: {
-          $in: deletedRequest.creator
-        }
-      }) 
+      db.User.findByIdAndUpdate(deletedRequest.creator, { $pull: {"requested": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {});
       db.Message.remove({
         _id: {
           $in: deletedRequest.messages
@@ -100,16 +81,8 @@ const destroy = (req, res) => {
       }), res.status(200).json({request: deletedRequest})
     } else if (!!deletedRequest.catsitter === true && deletedRequest.messages.length > 0) {
       console.log("Yes catsitter yes messages route hit")
-      db.User.remove({
-        _id: {
-          $in: deletedRequest.creator
-        }
-      })
-      db.User.remove({
-        _id: {
-          $in: deletedRequest.catsitter
-        }
-      }), 
+      db.User.findByIdAndUpdate(deletedRequest.creator, { $pull: {"requested": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {});
+      db.User.findByIdAndUpdate(deletedRequest.catsitter, { $pull: {"accepted": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {})
       db.Message.remove({
         _id: {
           $in: deletedRequest.messages
