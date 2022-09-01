@@ -34,22 +34,31 @@ const create = (req, res) => {
 
 const update = (req, res) => {
   db.Request.findById(req.params.id, (err, foundRequest) => {
-    let request = foundRequest
+    let oldRequest = foundRequest
     db.Request.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedRequest) => {
-    if(updatedRequest.accepted !== request.accepted) {
-      db.User.findById(updatedRequest.catsitter, (err, foundUser) => {
-        foundUser.accepted.push(updatedRequest);
-        foundUser.save((err, savedUser) => {
-          res.status(200).json({request: updatedRequest})
-      });
-    })
-    } else if (updatedRequest.accepted === false && !!updatedRequest.catsitter === false) {
-      res.status(200).json({request: updatedRequest})
-    } else if (updatedRequest.accepted === true && !!updatedRequest.catsitter === true) {
-      res.status(200).json({request: updatedRequest})
-    }
+      if(oldRequest.accepted === false && updatedRequest.accepted === true) {
+        console.log("Book catsitting route hit")
+        db.User.findById(updatedRequest.catsitter, (err, foundUser) => {
+          foundUser.accepted.push(updatedRequest);
+          foundUser.save((err, savedUser) => {
+            res.status(200).json({request: updatedRequest})
+          });
+        })
+      } else if(oldRequest.accepted === true && updatedRequest.accepted === false) {
+        console.log("Cancel catsitting route hit");
+        db.Request.findByIdAndUpdate(req.params.id, {$unset: {catsitter: 1}}, {new: true}, (err, foundRequest) => {
+          db.User.findByIdAndUpdate(updatedRequest.catsitter, {$pull: {"accepted": `${req.params.id}`}}, {new: true}, (err, foundUser) => {
+            foundUser.save((err, savedUser) => {
+              res.status(200).json({request: updatedRequest})
+            });
+          });
+        });
+      } else {
+        console.log("Update date/time with or without catsitter route hit")
+        res.status(200).json({request: updatedRequest})
+      } 
+    });
   });
-});
 };
 
 //Need to find out how to remove all messages
