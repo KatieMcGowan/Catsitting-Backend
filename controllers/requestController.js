@@ -66,12 +66,12 @@ const destroy = (req, res) => {
   db.Request.findByIdAndDelete(req.params.id, (err, deletedRequest) => {
     if (err) console.log("Error with Request delete", err)
     console.log(deletedRequest)
-    if (!!deletedRequest.catsitter === false && deletedRequest.messages.length === 0) {
+    if ("catsitter" in deletedRequest === false && deletedRequest.messages.length === 0) {
       console.log("No catsitter no messages route hit")
       db.User.findByIdAndUpdate(deletedRequest.creator, { $pull: {"requested": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {
         res.status(200).json({request: deletedRequest})
       })
-    } else if (!!deletedRequest.catsitter === true && deletedRequest.messages.length === 0) {
+    } else if ("catsitter" in deletedRequest === true && deletedRequest.messages.length === 0) {
       console.log("Yes catsitter no messages route hit")
       db.User.findByIdAndUpdate(deletedRequest.creator, { $pull: {"requested": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {
         console.log(updatedUser)
@@ -80,7 +80,7 @@ const destroy = (req, res) => {
         console.log(updatedUser)
         res.status(200).json({request: deletedRequest})
       })
-    } else if (!!deletedRequest.catsitter === false && deletedRequest.messages.length > 0) {
+    } else if ("catsitter" in deletedRequest === false && deletedRequest.messages.length > 0) {
       console.log("No catsitter yes messages route hit")
       db.User.findByIdAndUpdate(deletedRequest.creator, { $pull: {"requested": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {});
       db.Message.remove({
@@ -88,7 +88,7 @@ const destroy = (req, res) => {
           $in: deletedRequest.messages
         }
       }), res.status(200).json({request: deletedRequest})
-    } else if (!!deletedRequest.catsitter === true && deletedRequest.messages.length > 0) {
+    } else if ("catsitter" in deletedRequest === true && deletedRequest.messages.length > 0) {
       console.log("Yes catsitter yes messages route hit")
       db.User.findByIdAndUpdate(deletedRequest.creator, { $pull: {"requested": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {});
       db.User.findByIdAndUpdate(deletedRequest.catsitter, { $pull: {"accepted": `${req.params.id}`}}, { new: true}, (err, updatedUser) => {})

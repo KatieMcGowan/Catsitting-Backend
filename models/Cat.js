@@ -7,9 +7,9 @@ const CatSchema = new Schema({
   breed: String,
   feeding: String,
   user: { type: Schema.Types.ObjectId, ref: "User" },
-  personality: [String],
-  medication: [String],
-  additionalnotes: [String],
+  personality: String,
+  medication: String,
+  additionalnotes: String,
 });
 
 const Cat = mongoose.model("Cat", CatSchema);
