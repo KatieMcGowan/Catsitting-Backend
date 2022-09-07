@@ -8,8 +8,18 @@ const CatSchema = new Schema({
   feeding: String,
   user: { type: Schema.Types.ObjectId, ref: "User" },
   personality: String,
-  medication: String,
-  additionalnotes: String,
+  medication: [
+    {
+      _id: false,
+      medication: String
+    }
+  ],
+  additionalnotes: [
+    {
+      _id: false,
+      additionalnote: String
+    }
+  ],
 });
 
 const Cat = mongoose.model("Cat", CatSchema);

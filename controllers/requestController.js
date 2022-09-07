@@ -37,7 +37,6 @@ const update = (req, res) => {
     let oldRequest = foundRequest
     db.Request.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedRequest) => {
       if(oldRequest.accepted === false && updatedRequest.accepted === true) {
-        console.log("Book catsitting route hit")
         db.User.findById(updatedRequest.catsitter, (err, foundUser) => {
           foundUser.accepted.push(updatedRequest);
           foundUser.save((err, savedUser) => {
@@ -45,7 +44,6 @@ const update = (req, res) => {
           });
         })
       } else if(oldRequest.accepted === true && updatedRequest.accepted === false) {
-        console.log("Cancel catsitting route hit");
         db.Request.findByIdAndUpdate(req.params.id, {$unset: {catsitter: 1}}, {new: true}, (err, foundRequest) => {
           db.User.findByIdAndUpdate(updatedRequest.catsitter, {$pull: {"accepted": `${req.params.id}`}}, {new: true}, (err, foundUser) => {
             foundUser.save((err, savedUser) => {
@@ -54,7 +52,6 @@ const update = (req, res) => {
           });
         });
       } else {
-        console.log("Update date/time with or without catsitter route hit")
         res.status(200).json({request: updatedRequest})
       } 
     });
