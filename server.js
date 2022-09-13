@@ -9,6 +9,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("<h1>HiTail API</h1>")
+})
+
 app.use("/users", routes.users);
 app.use("/cats", routes.cats);
 app.use("/requests", routes.requests);
