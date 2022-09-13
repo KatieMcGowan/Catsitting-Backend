@@ -2,7 +2,7 @@
 const express = require("express");
 const routes = require("./routes");
 const cors = require("cors");
-const port = 5000;
+const PORT = process.env.PORT || "https://serene-anchorage-09864.herokuapp.com";
 const app = express();
 
 //MIDDLEWARE
@@ -15,4 +15,4 @@ app.use("/requests", routes.requests);
 app.use("/messages", routes.messages);
 
 //LISTENER
-app.listen(port, () => console.log(`Listening on ${port}`))
+app.listen(PORT, () => console.log(`Listening on ${PORT}`))
