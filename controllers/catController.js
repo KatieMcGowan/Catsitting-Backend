@@ -21,7 +21,6 @@ const show = (req, res) => {
 };
 
 const create = (req, res) => {
-  console.log(req.body);
   db.Cat.create(req.body, (err, savedCat) => {
     console.log(savedCat)
     if (err) console.log("Error with Cat create", err)

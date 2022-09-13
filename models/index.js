@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const connectionString = 'mongodb://localhost:27017/catsitting'
+const connectionString = 'mongodb+srv://JuneJune:DE3P7qCidX0Wi9sf@hitail.knhkj7t.mongodb.net/?retryWrites=true&w=majority'
 
 const configOptions = {
   useNewUrlParser: true,
