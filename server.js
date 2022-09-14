@@ -11,6 +11,8 @@ const routes = require("./routes");
 app.use(express.json());
 // app.use(cors());
 
+const HITAIL_CORS_DOMAIN = 'https://hitail.herokuapp.com';
+
 app.use(cors({
   credentials: true,
   origin: HITAIL_CORS_DOMAIN,
