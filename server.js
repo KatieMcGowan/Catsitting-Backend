@@ -9,7 +9,12 @@ const routes = require("./routes");
 
 //MIDDLEWARE
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+
+app.use(cors({
+  credentials: true,
+  origin: HITAIL_CORS_DOMAIN,
+}))
 
 app.get("/", (req, res) => {
   res.send("<h1>HiTail API</h1>")
