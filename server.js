@@ -29,3 +29,5 @@ app.use("/messages", routes.messages);
 
 //LISTENER
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))
+
+console.log('test')
