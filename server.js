@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-const PORT = process.env.PORT || "https://hitail-backend.onrender.com/";
+const PORT = process.env.PORT || "https://peaceful-violetblooms-486731.onrender.com";
 const routes = require("./routes");
 
 //MIDDLEWARE
