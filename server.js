@@ -4,14 +4,14 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-const PORT = process.env.PORT || "https://serene-anchorage-09864.herokuapp.com";
+const PORT = process.env.PORT || "https://hitail-backend.onrender.com/";
 const routes = require("./routes");
 
 //MIDDLEWARE
 app.use(express.json());
 // app.use(cors());
 
-const HITAIL_CORS_DOMAIN = 'https://hitail.herokuapp.com';
+const HITAIL_CORS_DOMAIN = 'https://hitail.onrender.com/';
 
 app.use(cors({
   credentials: true,
