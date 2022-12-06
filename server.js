@@ -17,7 +17,7 @@ app.use(express.json());
 
 //CORS
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", process.env.HITAIL_CORS_DOMAIN);
+  res.setHeader("Access-Control-Allow-Origin", "https://hitail.onrender.com/");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
