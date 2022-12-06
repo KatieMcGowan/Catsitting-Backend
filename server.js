@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 // app.use(cors({
-//   credentials: true,
+  // credentials: true,
 //   origin: process.env.HITAIL_CORS_DOMAIN,
 // }))
 
