@@ -4,18 +4,16 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-const PORT = process.env.PORT || "https://peaceful-violetblooms-486731.onrender.com";
+const PORT = process.env.PORT || process.env.URL;
 const routes = require("./routes");
 
 //MIDDLEWARE
 app.use(express.json());
 // app.use(cors());
 
-const HITAIL_CORS_DOMAIN = 'https://hitail.onrender.com/';
-
 app.use(cors({
   credentials: true,
-  origin: HITAIL_CORS_DOMAIN,
+  origin: process.env.HITAIL_CORS_DOMAIN,
 }))
 
 app.get("/", (req, res) => {
