@@ -8,16 +8,16 @@ const routes = require("./routes");
 
 //MIDDLEWARE
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
-app.use(cors({
-  credentials: true,
-  origin: process.env.HITAIL_CORS_DOMAIN,
-}))
+// app.use(cors({
+//   credentials: true,
+//   origin: process.env.HITAIL_CORS_DOMAIN,
+// }))
 
 //CORS
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "https://hitail.onrender.com/");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
