@@ -9,7 +9,7 @@ const routes = require("./routes");
 //MIDDLEWARE
 app.use(express.json());
 app.use(cors({
-  origin: "https://hitail.onrender.com/"
+  origin: "https://hitail.onrender.com"
 }));
 
 // const options: CorsOptions = {
