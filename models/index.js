@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+require('dotenv').config()
 
-const connectionString = 'mongodb+srv://JuneJune:DE3P7qCidX0Wi9sf@hitail.knhkj7t.mongodb.net/?retryWrites=true&w=majority'
+const connectionString = process.env.MONGODB.URI;
 
 const configOptions = {
   useNewUrlParser: true,
