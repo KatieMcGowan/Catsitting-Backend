@@ -8,27 +8,11 @@ const routes = require("./routes");
 
 //MIDDLEWARE
 app.use(express.json());
+
 app.use(cors({
   origin: "https://hitail.onrender.com"
 }));
 
-// const options: CorsOptions = {
-//   origin: allowedOrigins
-// };
-
-//CORS
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://hitail.onrender.com/");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-//     );
-//   res.header(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-//   );
-//   next();
-// });
 
 app.get("/", (req, res) => {
   res.send("<h1>HiTail API</h1>")
